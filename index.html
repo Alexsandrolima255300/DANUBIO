@@ -102,7 +102,7 @@ async function lookupCnpj(kind){
  const input=document.getElementById(kind==='origin'?'originCnpj':'destCnpj');
  const panel=document.getElementById(kind==='origin'?'originInfo':'destInfo');
  const button=document.querySelector('[data-lookup="'+kind+'"]');
- const cnpj=input.value.replace(/\\D/g,'');
+ const cnpj=input.value.replace(/\D/g,'');
  if(cnpj.length!==14){panel.className='company-result error';panel.textContent='Digite um CNPJ válido com 14 números.';return;}
  if(lastCnpjLookup[kind]===cnpj)return;
  lastCnpjLookup[kind]=cnpj;
@@ -118,7 +118,7 @@ async function lookupCnpj(kind){
   panel.className='company-result success';
   panel.textContent=(kind==='origin'?'Origem identificada: ':'Destinatário identificado: ')+company+' | '+[addr,city,d.cep].filter(Boolean).join(' • ');
   if(kind==='dest'){
-   if(d.cep){let cep=String(d.cep).replace(/\\D/g,'').slice(0,8);document.getElementById('destinationCep').value=cep.length===8?cep.slice(0,5)+'-'+cep.slice(5):d.cep;}
+   if(d.cep){let cep=String(d.cep).replace(/\D/g,'').slice(0,8);document.getElementById('destinationCep').value=cep.length===8?cep.slice(0,5)+'-'+cep.slice(5):d.cep;}
    if(d.municipio){
     const found=destinations.findIndex(x=>normalize(x.name)===normalize(d.municipio));
     if(found>=0){
@@ -141,7 +141,7 @@ async function lookupCnpj(kind){
 document.querySelectorAll('[data-lookup]').forEach(b=>b.addEventListener('click',()=>lookupCnpj(b.dataset.lookup)));
 function maskCnpj(el){el.addEventListener('input',()=>{let v=el.value.replace(/\D/g,'').slice(0,14);v=v.replace(/^(\d{2})(\d)/,'$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1/$2').replace(/(\d{4})(\d)/,'$1-$2');el.value=v;});}
 maskCnpj(document.getElementById('originCnpj'));maskCnpj(document.getElementById('destCnpj'));
-['origin','dest'].forEach(kind=>{const el=document.getElementById(kind==='origin'?'originCnpj':'destCnpj');el.addEventListener('input',()=>{const digits=el.value.replace(/\\D/g,'');if(digits.length===14&&lastCnpjLookup[kind]!==digits)lookupCnpj(kind);});el.addEventListener('blur',()=>{const digits=el.value.replace(/\\D/g,'');if(digits.length===14&&lastCnpjLookup[kind]!==digits)lookupCnpj(kind);});});
+['origin','dest'].forEach(kind=>{const el=document.getElementById(kind==='origin'?'originCnpj':'destCnpj');el.addEventListener('input',()=>{const digits=el.value.replace(/\D/g,'');if(digits.length===14&&lastCnpjLookup[kind]!==digits)lookupCnpj(kind);});el.addEventListener('blur',()=>{const digits=el.value.replace(/\D/g,'');if(digits.length===14&&lastCnpjLookup[kind]!==digits)lookupCnpj(kind);});});
 function updateDestinationHint(){const d=destinations[Number(destinationSelect.value)];document.getElementById('destinationHint').textContent=d?'Destino selecionado: '+d.name+'.':'Selecione a cidade de entrega.';}
 destinationSelect.addEventListener('change',updateDestinationHint);
 document.getElementById('destinationCep').addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,'').slice(0,8);if(v.length>5)v=v.slice(0,5)+'-'+v.slice(5);e.target.value=v;});
