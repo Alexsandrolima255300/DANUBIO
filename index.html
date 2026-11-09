@@ -33,15 +33,15 @@ footer{background:#041428;color:#aebfd1;padding:27px 0}.foot{display:flex;justif
 <section class="hero"><div class="wrap hero-inner"><div><span class="eyebrow">Transporte • Distribuição • Conexão</span><h1>Sua operação em movimento. <span>Seu negócio mais longe.</span></h1><p class="hero-copy">Conectamos empresas, cidades e oportunidades com soluções de transporte regional. Mais clareza na cotação, cuidado em cada etapa e uma operação que acompanha o seu ritmo.</p><div class="hero-actions"><a class="btn btn-lime" href="#simulador">Calcular meu frete ↗</a><a class="btn btn-glass" href="#cidades">Conhecer cobertura</a></div></div></div></section>
 <div class="trustbar"><div class="wrap trust-inner"><div class="trust-item"><span class="trust-icon">⌖</span>Atuação regional estratégica</div><div class="trust-item"><span class="trust-icon">↗</span>Cotação simples e transparente</div><div class="trust-item"><span class="trust-icon">✓</span>Foco na sua operação</div></div></div>
 
-<section class="calc-section quote-section" id="simulador"><div class="wrap quote-wrap"><div class="quote-heading"><span class="eyebrow">Cotação online</span><h2>Nova cotação</h2><p>Informe o destino, o valor da NF e o peso.</p><div class="quote-steps"><span class="step-number">1</span><span><strong>Comece pelo destino.</strong> Depois informe NF e peso.</span></div></div><div class="quote-card"><form id="freightForm" novalidate>
+<section class="calc-section quote-section" id="simulador"><div class="wrap quote-wrap"><div class="quote-heading"><span class="eyebrow">Cotação online</span><h2>Nova cotação</h2><p>Informe os CNPJs para preencher origem e destino automaticamente. Depois, confira os dados da carga.</p><div class="quote-steps"><span class="step-number">1</span><span><strong>Informe os CNPJs.</strong> Origem e destino serão identificados automaticamente.</span></div></div><div class="quote-card"><form id="freightForm" novalidate>
 <div class="quote-section-title"><span>01</span><div><h3>Identificação das empresas</h3><p>Informe os CNPJs para localizar os dados cadastrais.</p></div></div>
 <div class="quote-grid">
 <div class="field cnpj-quote-field"><label for="originCnpj">CNPJ de origem</label><div class="input-action"><input id="originCnpj" type="text" inputmode="numeric" maxlength="18" placeholder="00.000.000/0000-00" required><button type="button" class="lookup-btn" data-lookup="origin">Buscar</button></div><small class="field-hint">Informe o CNPJ para identificar a empresa.</small><div class="company-result" id="originInfo">Origem<br><span>Informe o CNPJ de origem para localizar o endereço.</span></div></div>
 <div class="field cnpj-quote-field"><label for="destCnpj">CNPJ do destinatário</label><div class="input-action"><input id="destCnpj" type="text" inputmode="numeric" maxlength="18" placeholder="00.000.000/0000-00" required><button type="button" class="lookup-btn" data-lookup="dest">Buscar</button></div><small class="field-hint">Informe o CNPJ para identificar a empresa.</small><div class="company-result" id="destInfo">Destino<br><span>Informe o CNPJ do destinatário para localizar o endereço.</span></div></div>
 </div>
-<div class="quote-section-title"><span>02</span><div><h3>Destino da carga</h3><p>Selecione o destino cadastrado e confira o prazo estimado.</p></div></div>
+<div class="quote-section-title"><span>02</span><div><h3>Destino da carga</h3><p>O destino será selecionado automaticamente pelo CNPJ do destinatário.</p></div></div>
 <div class="quote-grid">
-<div class="field full-field"><label for="destination">Destino</label><select id="destination" required><option value="">Selecione o destino...</option></select><small class="field-hint" id="destinationHint">Selecione a cidade de entrega.</small></div>
+<div class="field full-field"><label for="destination">Destino</label><select id="destination" required><option value="">Selecione o destino...</option></select><small class="field-hint" id="destinationHint">A cidade será identificada pelo CNPJ do destinatário. Se necessário, você poderá ajustar manualmente.</small></div>
 <div class="field"><label for="destinationCep">CEP de destino</label><input id="destinationCep" inputmode="numeric" maxlength="9" placeholder="00000-000"></div>
 </div>
 <div class="quote-section-title"><span>03</span><div><h3>Dados da carga</h3><p>Preencha as informações para calcular a estimativa.</p></div></div>
@@ -97,16 +97,56 @@ const destinationSelect=document.getElementById('destination');
 destinations.forEach((d,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=d.name;destinationSelect.appendChild(o);});
 document.getElementById('cityList').innerHTML=destinations.map(d=>'<span class="city">'+d.name+'</span>').join('');
 document.getElementById('year').textContent=new Date().getFullYear();
-async function lookupCnpj(kind){const input=document.getElementById(kind==='origin'?'originCnpj':'destCnpj');const panel=document.getElementById(kind==='origin'?'originInfo':'destInfo');const button=document.querySelector('[data-lookup="'+kind+'"]');const cnpj=input.value.replace(/\D/g,'');panel.className='company-result';panel.textContent='Consultando cadastro...';if(cnpj.length!==14){panel.classList.add('error');panel.textContent='Digite um CNPJ válido com 14 números.';return;}button.disabled=true;button.textContent='Buscando...';try{const response=await fetch('https://brasilapi.com.br/api/cnpj/v1/'+cnpj);if(!response.ok)throw new Error(response.status===404?'CNPJ não encontrado.':'Serviço de consulta indisponível. Tente novamente.');const d=await response.json();const addr=[d.logradouro,d.numero,d.complemento,d.bairro].filter(Boolean).join(', ');const city=[d.municipio,d.uf].filter(Boolean).join(' — ');panel.className='company-result success';panel.textContent=(d.razao_social||d.nome_fantasia||'Empresa localizada')+' | '+[addr,city,d.cep].filter(Boolean).join(' • ');if(kind==='dest'&&d.municipio){const found=destinations.findIndex(x=>normalize(x.name.split(' • ')[0].replace(/\s*\(.*\)$/,''))===normalize(d.municipio));if(found>=0){destinationSelect.value=String(found);updateDestinationHint();}else{document.getElementById('destinationHint').textContent='A cidade do CNPJ ('+d.municipio+'/'+d.uf+') não foi encontrada na lista. Selecione o destino correto ou confirme a cobertura com a equipe.';}}}catch(err){panel.className='company-result error';panel.textContent=err.message||'Não foi possível consultar o CNPJ.';}finally{button.disabled=false;button.textContent='Buscar';}}
+const lastCnpjLookup={origin:'',dest:''};
+async function lookupCnpj(kind){
+ const input=document.getElementById(kind==='origin'?'originCnpj':'destCnpj');
+ const panel=document.getElementById(kind==='origin'?'originInfo':'destInfo');
+ const button=document.querySelector('[data-lookup="'+kind+'"]');
+ const cnpj=input.value.replace(/\\D/g,'');
+ if(cnpj.length!==14){panel.className='company-result error';panel.textContent='Digite um CNPJ válido com 14 números.';return;}
+ if(lastCnpjLookup[kind]===cnpj)return;
+ lastCnpjLookup[kind]=cnpj;
+ panel.className='company-result';panel.textContent='Consultando cadastro...';
+ if(button){button.disabled=true;button.textContent='Buscando...';}
+ try{
+  const response=await fetch('https://brasilapi.com.br/api/cnpj/v1/'+cnpj);
+  if(!response.ok)throw new Error(response.status===404?'CNPJ não encontrado.':'Serviço de consulta indisponível. Tente novamente.');
+  const d=await response.json();
+  const addr=[d.logradouro,d.numero,d.complemento,d.bairro].filter(Boolean).join(', ');
+  const city=[d.municipio,d.uf].filter(Boolean).join(' — ');
+  const company=d.razao_social||d.nome_fantasia||'Empresa localizada';
+  panel.className='company-result success';
+  panel.textContent=(kind==='origin'?'Origem identificada: ':'Destinatário identificado: ')+company+' | '+[addr,city,d.cep].filter(Boolean).join(' • ');
+  if(kind==='dest'){
+   if(d.cep){let cep=String(d.cep).replace(/\\D/g,'').slice(0,8);document.getElementById('destinationCep').value=cep.length===8?cep.slice(0,5)+'-'+cep.slice(5):d.cep;}
+   if(d.municipio){
+    const found=destinations.findIndex(x=>normalize(x.name)===normalize(d.municipio));
+    if(found>=0){
+     destinationSelect.value=String(found);
+     updateDestinationHint();
+     document.getElementById('destinationHint').textContent='Destino preenchido automaticamente pelo CNPJ: '+destinations[found].name+'.';
+    }else{
+     document.getElementById('destinationHint').textContent='A cidade do CNPJ ('+d.municipio+'/'+(d.uf||'')+') não está na lista de atendimento. Confira a cobertura com a equipe.';
+     destinationSelect.value='';
+    }
+   }
+  }
+ }catch(err){
+  lastCnpjLookup[kind]='';
+  panel.className='company-result error';panel.textContent=err.message||'Não foi possível consultar o CNPJ.';
+ }finally{
+  if(button){button.disabled=false;button.textContent='Buscar';}
+ }
+}
 document.querySelectorAll('[data-lookup]').forEach(b=>b.addEventListener('click',()=>lookupCnpj(b.dataset.lookup)));
 function maskCnpj(el){el.addEventListener('input',()=>{let v=el.value.replace(/\D/g,'').slice(0,14);v=v.replace(/^(\d{2})(\d)/,'$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1/$2').replace(/(\d{4})(\d)/,'$1-$2');el.value=v;});}
 maskCnpj(document.getElementById('originCnpj'));maskCnpj(document.getElementById('destCnpj'));
-document.getElementById('originCnpj').addEventListener('blur',()=>{if(document.getElementById('originCnpj').value.replace(/\D/g,'').length===14)lookupCnpj('origin');});document.getElementById('destCnpj').addEventListener('blur',()=>{if(document.getElementById('destCnpj').value.replace(/\\D/g,'').length===14)lookupCnpj('dest');});
+['origin','dest'].forEach(kind=>{const el=document.getElementById(kind==='origin'?'originCnpj':'destCnpj');el.addEventListener('input',()=>{const digits=el.value.replace(/\\D/g,'');if(digits.length===14&&lastCnpjLookup[kind]!==digits)lookupCnpj(kind);});el.addEventListener('blur',()=>{const digits=el.value.replace(/\\D/g,'');if(digits.length===14&&lastCnpjLookup[kind]!==digits)lookupCnpj(kind);});});
 function updateDestinationHint(){const d=destinations[Number(destinationSelect.value)];document.getElementById('destinationHint').textContent=d?'Destino selecionado: '+d.name+'.':'Selecione a cidade de entrega.';}
 destinationSelect.addEventListener('change',updateDestinationHint);
 document.getElementById('destinationCep').addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,'').slice(0,8);if(v.length>5)v=v.slice(0,5)+'-'+v.slice(5);e.target.value=v;});
 document.getElementById('freightForm').addEventListener('submit',e=>{e.preventDefault();const kg=Number(document.getElementById('weight').value);const nf=Number(document.getElementById('invoice').value);const vols=Number(document.getElementById('volumes').value);if(!destinationSelect.value){alert('Selecione o destino da carga.');destinationSelect.focus();return;}if(!(kg>0)||!(nf>0)||!(vols>0)){alert('Preencha corretamente o valor da NF, peso e quantidade de volumes.');return;}const d=destinations[Number(destinationSelect.value)];let value,explanation;if(kg<=100){value=115;explanation='Tarifa fixa aplicada para cargas de até 100 kg.';}else{const byWeight=kg*.70;const byInvoice=nf*.015;value=Math.max(byWeight,byInvoice);explanation='Acima de 100 kg: peso ('+money(byWeight)+') comparado a 1,5% da nota fiscal ('+money(byInvoice)+'). Foi considerado o maior valor.';}document.getElementById('price').textContent=money(value);document.getElementById('basis').textContent='Frete estimado • '+d.name;document.getElementById('explain').textContent=explanation;document.getElementById('quoteMeta').textContent='Destino: '+d.name+' • Peso: '+kg+' kg • Volumes: '+vols+' • NF: '+money(nf);document.getElementById('result').classList.add('show');});
-document.getElementById('freightForm').addEventListener('reset',()=>{setTimeout(()=>{document.getElementById('result').classList.remove('show');document.getElementById('originInfo').innerHTML='Origem<br><span>Informe o CNPJ de origem para localizar o endereço.</span>';document.getElementById('destInfo').innerHTML='Destino<br><span>Informe o CNPJ do destinatário para localizar o endereço.</span>';document.getElementById('destinationHint').textContent='Selecione a cidade de entrega.';},0);});
+document.getElementById('freightForm').addEventListener('reset',()=>{setTimeout(()=>{document.getElementById('result').classList.remove('show');document.getElementById('originInfo').innerHTML='Origem<br><span>Informe o CNPJ de origem para localizar o endereço.</span>';document.getElementById('destInfo').innerHTML='Destino<br><span>Informe o CNPJ do destinatário para localizar o endereço.</span>';document.getElementById('destinationHint').textContent='A cidade será identificada pelo CNPJ do destinatário. Se necessário, você poderá ajustar manualmente.';},0);});
 document.getElementById('printQuote').addEventListener('click',()=>{if(!document.getElementById('result').classList.contains('show')){alert('Calcule a cotação antes de imprimir.');return;}window.print();});
 document.getElementById('citiesToggle').addEventListener('click',()=>{const list=document.getElementById('cityList');const open=list.classList.toggle('open');document.getElementById('citiesToggle').setAttribute('aria-expanded',String(open));document.getElementById('citiesToggle').innerHTML=open?'Ocultar cidades atendidas <span>▲</span>':'Mostrar cidades atendidas <span>▼</span>';});
 </script>
