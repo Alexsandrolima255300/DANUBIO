@@ -63,248 +63,49 @@ footer{background:#041428;color:#aebfd1;padding:27px 0}.foot{display:flex;justif
 <footer><div class="wrap foot"><strong>DANÚBIO TRANSPORTES</strong><span>© <span id="year"></span> Danúbio Transportes. Todos os direitos reservados.</span></div></footer>
 <script>
 const money=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const destinationRaw=`ARAXÁ|1
-DIAMONTE CARMELO|1
-PATOS DE MINAS|1
-PATROCÍNIO|1
-UBERLÂNDIA|1
-CONTAGEM|1
-BELO HORIZONTE|1
-JOÃO PINHEIRO|2
-PARACATU|2
-JUIZ DE FORA|2
-SÃO SEBASTIÃO DO PARAÍSO|3
-CACHOEIRO DO ITAPEMIRIM|2
-CASTELO|3
-VITÓRIA|2
-CARIACICA • especial|2
-VIANA • especial|2
-SERRA • especial|2
-VILA VELHA • especial|2
-MACAÉ|2
-RIO DE JANEIRO|2
-NOVA FRIBURGO|2
-PETRÓPOLIS|2
-DUQUE DE CAXIAS • especial|1
-MESQUITA • especial|1
-NILÓPOLIS • especial|1
-NOVA IGUAÇU • especial|1
-SÃO JOÃO DE MERITI • especial|1
-RESENDE|2
-TERESÓPOLIS|2
-VOLTA REDONDA|2
-ADAMANTINA|3
-AMERICANA|3
-ÁGUAS DE SÃO PEDRO|3
-ARAÇATUBA|3
-ARARAQUARA|3
-AURIFLAMA|3
-AVARÉ|3
-BARRETOS|3
-BAURU|3
-BOTUCATU|3
-BROTAS|3
-BARRA BONITA|3
-CAMPINAS ( ITAMARATI )|3
-HORTOLÂNDIA • especial (2, 4, 6 FEIRAS)|3
-PAULÍNIA • especial (2, 4 FEIRAS)|3
-SUMARÉ • especial (2, 4, 6 FEIRAS)|3
-VALINHOS • especial (3, 5 FEIRAS)|3
-CAMPINAS|2
-CATANDUVA|3
-DRACENA|3
-FERNANDÓPOLIS|3
-FRANCA|3
-GARÇA|3
-GUARULHOS|3
-IBITINGA|3
-ILHA SOLTEIRA|3
-ITAPETININGA|3
-ITAPEVA|3
-JALES|3
-JAÚ|2
-JUNDIAÍ ( ITAMARATI EXPRESS )|3
-LENÇÓIS PAULISTA|3
-LIMEIRA|2
-ARARAS • especial|2
-ARTUR NOGUEIRA • especial|2
-CORDEIRÓPOLIS • especial|2
-LINS • especial|2
-SANTA GERTRUDES • especial|2
-MARÍLIA|2
-MATÃO|3
-NOVA ODESSA|2
-OSASCO|1
-OSVALDO CRUZ|2
-OURINHOS|1
-PEREIRA BARRETO|3
-PIRACICABA GARAGEM|2
-CAPIVARI • especial|2
-CHARQUEADA • especial|2
-SALTINHO • especial|2
-RIO DAS PEDRAS • especial|2
-PRESIDENTE PRUDENTE|2
-REGISTRO|2
-RIBEIRÃO PRETO|1
-RIBEIRÃO PRETO ( IRANN-FEDERAL )|2
-BATATAIS • especial|2
-BARRINHAS • especial|2
-BRODOWSKI • especial|2
-CRAVINHOS • especial|2
-DUMONT • especial|2
-JABOTICABAL • especial|2
-JARDINÓPOLIS • especial|2
-LUIZ ANTÔNIO • especial|2
-ORLÂNDIA • especial|2
-PITANGUEIRAS • especial|2
-PONTAL • especial|2
-PORTO FERREIRA • especial|2
-PRADÓPOLIS • especial|2
-SALES OLIVEIRA • especial|2
-SÃO SIMÃO • especial|2
-SERRA AZUL • especial|2
-SERRANA • especial|2
-SERTÃOZINHO • especial|2
-RIO CLARO|3
-SANTA BÁRBARA D'OESTE|3
-SANTA FÉ DO SUL|2
-SANTO ANDRÉ|1
-SANTOS|2
-SÃO CARLOS|1
-SÃO JOSÉ DO RIO PRETO|2
-SÃO JOSÉ DOS CAMPOS|2
-SÃO PAULO BRÁS|1
-SÃO PAULO ( CENTRAL DE COLETAS )|1
-ALDEIA DA SERRA • especial|1
-ARUJÁ • especial|1
-BARUERI • especial|1
-BOM SUCESSO • especial|1
-CAIEIRAS MOTO • especial|1
-CAJAMAR • especial|1
-CARAPICUÍBA • especial|1
-COTIA • especial|1
-DIADEMA • especial|1
-EMBU DAS ARTES • especial|1
-FERRAZ DE VASCONCELOS • especial|1
-FRANCISCO MORATO • especial|1
-FRANCO DA ROCHA • especial|1
-GUAIANAZES • especial|1
-GUARULHOS • especial|1
-ITAPECERICA DA SERRA • especial|1
-ITAPEVI • especial|1
-ITAQUAQUECETUBA • especial|1
-JANDIRA • especial|1
-MAUÁ • especial|1
-MOGI DAS CRUZES • especial|1
-OSASCO • especial|1
-PARELHEIROS • especial|1
-POÁ • especial|1
-RIBEIRÃO PIRES • especial|1
-SANTANA DE PARNAÍBA • especial|1
-SANTO ANDRÉ • especial|1
-SÃO BERNARDO DO CAMPO • especial|1
-SÃO CAETANO DO SUL • especial|1
-SUZANO • especial|1
-TABOÃO DA SERRA • especial|1
-VARGEM GRANDE PAULISTA • especial|1
-SÃO PEDRO|2
-SOROCABA|2
-TAQUARITUBA|2
-TUPÃ|2
-VOTUPORANGA|2
-BALNEÁRIO CAMBORIÚ|3
-BLUMENAU|3
-ITAJAÍ|3
-BRUSQUE|3
-FLORIANÓPOLIS|3
-BIGUAÇU • especial|3
-PALHOÇA • especial|3
-SÃO JOSÉ • especial|3
-JARAGUÁ DO SUL|3
-JOINVILLE|3
-RIO DO SUL|3
-CUIABÁ|3
-LUCAS DO RIO VERDE|3
-NOVA MUTUM|3
-SINOP|3
-SORRISO|3
-RONDONÓPOLIS|3
-VÁRZEA GRANDE|3
-APARECIDA DO TABOADO|3
-CAMPO GRANDE|3
-DOURADOS|3
-ITAPORÃ|3
-MARACAJU|3
-NAVIRAÍ|3
-PARANAÍBA|3
-ALTÔNIA|3
-APUCARANA|3
-AMAPORÃ|3
-ARAPOTI|3
-BANDEIRANTES|3
-CAMPO MOURÃO|3
-CASCAVEL|3
-CASTRO|3
-CIANORTE|3
-CORNÉLIO PROCÓPIO|3
-CURITIBA|2
-ALMIRANTE TAMANDARÉ • especial|2
-ARAUCÁRIA • especial|2
-CAMPINA GRANDE DO SUL • especial|2
-CAMPO LARGO • especial|2
-COLOMBO • especial|2
-FAZENDA RIO GRANDE • especial|2
-PINHAIS • especial|2
-PIRAQUARA • especial|2
-QUATRO BARRAS • especial|2
-SÃO JOSÉ DOS PINHAIS • especial|2
-FOZ DO IGUAÇU|3
-IBAITI|3
-JACAREZINHO|3
-JAGUARIAÍVA|3
-LOANDA|3
-LONDRINA|2
-MAMBORÊ|3
-MARINGÁ|2
-MEDIANEIRA|3
-NOVA ESPERANÇA|3
-PARANAGUÁ|3
-PARANAVAÍ|3
-PIRAÍ DO SUL|3
-PONTA GROSSA|2
-RIBEIRÃO DO PINHAL|3
-SANTA IZABEL DO IVAÍ|3
-SÃO MIGUEL DO IGUAÇU|3
-SIQUEIRA CAMPOS|3
-UBIRATÃ|3
-UMUARAMA|3
-WENCESLAU BRÁS|3
-CAXIAS DO SUL|3
-BAGÉ|3
-PELOTAS|3
-RIO GRANDE|3
-PORTO ALEGRE|3
-ALVORADA • especial|3
-CACHOEIRINHA • especial|3
-CANOAS • especial|3
-ESTEIO • especial|3
-GRAVATAÍ • especial|3
-NOVO HAMBURGO • especial|3`;
-const destinations=destinationRaw.split('\n').map(line=>{const [name,days]=line.split('|');return {name,days:Number(days)};});
+const destinationRaw=`Campinas
+Hortolândia
+Indaiatuba
+Sumaré
+Vinhedo
+Valinhos
+Americana
+Santa Bárbara d'Oeste
+Sorocaba
+Leme
+Limeira
+Piracicaba
+São Carlos
+Rio Claro
+Porto Ferreira
+Ribeirão Preto
+Bragança Paulista
+Araras
+São Paulo
+Barueri
+Diadema
+Guarulhos
+Mauá
+Osasco
+São Caetano do Sul
+Santo André
+Embu das Artes
+Itapecerica da Serra`;
+const destinations=destinationRaw.split('\n').map(name=>({name,days:null}));
 const normalize=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
 const destinationSelect=document.getElementById('destination');
-destinations.forEach((d,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=d.name+' — '+d.days+' '+(d.days===1?'DIA':'DIAS');destinationSelect.appendChild(o);});
-document.getElementById('cityList').innerHTML=destinations.map(d=>'<span class="city">'+d.name+' — '+d.days+' '+(d.days===1?'dia':'dias')+'</span>').join('');
+destinations.forEach((d,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=d.name;destinationSelect.appendChild(o);});
+document.getElementById('cityList').innerHTML=destinations.map(d=>'<span class="city">'+d.name+'</span>').join('');
 document.getElementById('year').textContent=new Date().getFullYear();
 async function lookupCnpj(kind){const input=document.getElementById(kind==='origin'?'originCnpj':'destCnpj');const panel=document.getElementById(kind==='origin'?'originInfo':'destInfo');const button=document.querySelector('[data-lookup="'+kind+'"]');const cnpj=input.value.replace(/\D/g,'');panel.className='company-result';panel.textContent='Consultando cadastro...';if(cnpj.length!==14){panel.classList.add('error');panel.textContent='Digite um CNPJ válido com 14 números.';return;}button.disabled=true;button.textContent='Buscando...';try{const response=await fetch('https://brasilapi.com.br/api/cnpj/v1/'+cnpj);if(!response.ok)throw new Error(response.status===404?'CNPJ não encontrado.':'Serviço de consulta indisponível. Tente novamente.');const d=await response.json();const addr=[d.logradouro,d.numero,d.complemento,d.bairro].filter(Boolean).join(', ');const city=[d.municipio,d.uf].filter(Boolean).join(' — ');panel.className='company-result success';panel.textContent=(d.razao_social||d.nome_fantasia||'Empresa localizada')+' | '+[addr,city,d.cep].filter(Boolean).join(' • ');if(kind==='dest'&&d.municipio){const found=destinations.findIndex(x=>normalize(x.name.split(' • ')[0].replace(/\s*\(.*\)$/,''))===normalize(d.municipio));if(found>=0){destinationSelect.value=String(found);updateDestinationHint();}else{document.getElementById('destinationHint').textContent='A cidade do CNPJ ('+d.municipio+'/'+d.uf+') não foi encontrada na lista. Selecione o destino correto ou confirme a cobertura com a equipe.';}}}catch(err){panel.className='company-result error';panel.textContent=err.message||'Não foi possível consultar o CNPJ.';}finally{button.disabled=false;button.textContent='Buscar';}}
 document.querySelectorAll('[data-lookup]').forEach(b=>b.addEventListener('click',()=>lookupCnpj(b.dataset.lookup)));
 function maskCnpj(el){el.addEventListener('input',()=>{let v=el.value.replace(/\D/g,'').slice(0,14);v=v.replace(/^(\d{2})(\d)/,'$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1/$2').replace(/(\d{4})(\d)/,'$1-$2');el.value=v;});}
 maskCnpj(document.getElementById('originCnpj'));maskCnpj(document.getElementById('destCnpj'));
 document.getElementById('originCnpj').addEventListener('blur',()=>{if(document.getElementById('originCnpj').value.replace(/\D/g,'').length===14)lookupCnpj('origin');});document.getElementById('destCnpj').addEventListener('blur',()=>{if(document.getElementById('destCnpj').value.replace(/\\D/g,'').length===14)lookupCnpj('dest');});
-function updateDestinationHint(){const d=destinations[Number(destinationSelect.value)];document.getElementById('destinationHint').textContent=d?'Prazo estimado cadastrado: '+d.days+' '+(d.days===1?'dia útil':'dias úteis')+'.':'Selecione a cidade de entrega.';}
+function updateDestinationHint(){const d=destinations[Number(destinationSelect.value)];document.getElementById('destinationHint').textContent=d?'Destino selecionado: '+d.name+'.':'Selecione a cidade de entrega.';}
 destinationSelect.addEventListener('change',updateDestinationHint);
 document.getElementById('destinationCep').addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,'').slice(0,8);if(v.length>5)v=v.slice(0,5)+'-'+v.slice(5);e.target.value=v;});
-document.getElementById('freightForm').addEventListener('submit',e=>{e.preventDefault();const kg=Number(document.getElementById('weight').value);const nf=Number(document.getElementById('invoice').value);const vols=Number(document.getElementById('volumes').value);if(!destinationSelect.value){alert('Selecione o destino da carga.');destinationSelect.focus();return;}if(!(kg>0)||!(nf>0)||!(vols>0)){alert('Preencha corretamente o valor da NF, peso e quantidade de volumes.');return;}const d=destinations[Number(destinationSelect.value)];let value,explanation;if(kg<=100){value=115;explanation='Tarifa fixa aplicada para cargas de até 100 kg.';}else{const byWeight=kg*.70;const byInvoice=nf*.015;value=Math.max(byWeight,byInvoice);explanation='Acima de 100 kg: peso ('+money(byWeight)+') comparado a 1,5% da nota fiscal ('+money(byInvoice)+'). Foi considerado o maior valor.';}document.getElementById('price').textContent=money(value);document.getElementById('basis').textContent='Frete estimado • '+d.name;document.getElementById('explain').textContent=explanation;document.getElementById('quoteMeta').textContent='Prazo estimado: '+d.days+' '+(d.days===1?'dia útil':'dias úteis')+' • Peso: '+kg+' kg • Volumes: '+vols+' • NF: '+money(nf);document.getElementById('result').classList.add('show');});
+document.getElementById('freightForm').addEventListener('submit',e=>{e.preventDefault();const kg=Number(document.getElementById('weight').value);const nf=Number(document.getElementById('invoice').value);const vols=Number(document.getElementById('volumes').value);if(!destinationSelect.value){alert('Selecione o destino da carga.');destinationSelect.focus();return;}if(!(kg>0)||!(nf>0)||!(vols>0)){alert('Preencha corretamente o valor da NF, peso e quantidade de volumes.');return;}const d=destinations[Number(destinationSelect.value)];let value,explanation;if(kg<=100){value=115;explanation='Tarifa fixa aplicada para cargas de até 100 kg.';}else{const byWeight=kg*.70;const byInvoice=nf*.015;value=Math.max(byWeight,byInvoice);explanation='Acima de 100 kg: peso ('+money(byWeight)+') comparado a 1,5% da nota fiscal ('+money(byInvoice)+'). Foi considerado o maior valor.';}document.getElementById('price').textContent=money(value);document.getElementById('basis').textContent='Frete estimado • '+d.name;document.getElementById('explain').textContent=explanation;document.getElementById('quoteMeta').textContent='Destino: '+d.name+' • Peso: '+kg+' kg • Volumes: '+vols+' • NF: '+money(nf);document.getElementById('result').classList.add('show');});
 document.getElementById('freightForm').addEventListener('reset',()=>{setTimeout(()=>{document.getElementById('result').classList.remove('show');document.getElementById('originInfo').innerHTML='Origem<br><span>Informe o CNPJ de origem para localizar o endereço.</span>';document.getElementById('destInfo').innerHTML='Destino<br><span>Informe o CNPJ do destinatário para localizar o endereço.</span>';document.getElementById('destinationHint').textContent='Selecione a cidade de entrega.';},0);});
 document.getElementById('printQuote').addEventListener('click',()=>{if(!document.getElementById('result').classList.contains('show')){alert('Calcule a cotação antes de imprimir.');return;}window.print();});
 document.getElementById('citiesToggle').addEventListener('click',()=>{const list=document.getElementById('cityList');const open=list.classList.toggle('open');document.getElementById('citiesToggle').setAttribute('aria-expanded',String(open));document.getElementById('citiesToggle').innerHTML=open?'Ocultar cidades atendidas <span>▲</span>':'Mostrar cidades atendidas <span>▼</span>';});
