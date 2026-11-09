@@ -64,7 +64,7 @@ footer{background:#041428;color:#aebfd1;padding:27px 0}.foot{display:flex;justif
 <script>
 const money=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const destinationRaw=`ARAXÁ|1
-DIAMANTE DO CARMELO|1
+DIAMONTE CARMELO|1
 PATOS DE MINAS|1
 PATROCÍNIO|1
 UBERLÂNDIA|1
@@ -300,6 +300,7 @@ async function lookupCnpj(kind){const input=document.getElementById(kind==='orig
 document.querySelectorAll('[data-lookup]').forEach(b=>b.addEventListener('click',()=>lookupCnpj(b.dataset.lookup)));
 function maskCnpj(el){el.addEventListener('input',()=>{let v=el.value.replace(/\D/g,'').slice(0,14);v=v.replace(/^(\d{2})(\d)/,'$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1/$2').replace(/(\d{4})(\d)/,'$1-$2');el.value=v;});}
 maskCnpj(document.getElementById('originCnpj'));maskCnpj(document.getElementById('destCnpj'));
+document.getElementById('originCnpj').addEventListener('blur',()=>{if(document.getElementById('originCnpj').value.replace(/\\D/g,'').length===14)lookupCnpj('origin');});document.getElementById('destCnpj').addEventListener('blur',()=>{if(document.getElementById('destCnpj').value.replace(/\\D/g,'').length===14)lookupCnpj('dest');});
 function updateDestinationHint(){const d=destinations[Number(destinationSelect.value)];document.getElementById('destinationHint').textContent=d?'Prazo estimado cadastrado: '+d.days+' '+(d.days===1?'dia útil':'dias úteis')+'.':'Selecione a cidade de entrega.';}
 destinationSelect.addEventListener('change',updateDestinationHint);
 document.getElementById('destinationCep').addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,'').slice(0,8);if(v.length>5)v=v.slice(0,5)+'-'+v.slice(5);e.target.value=v;});
